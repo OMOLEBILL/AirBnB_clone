@@ -4,15 +4,17 @@ import datetime
 """this module defines all common attributes used in this project"""
 
 
-class BaseModel():
+class BaseModel:
     """This class defines all common attributes used in this project"""
-    id = str(uuid.uuid4())
-    created_at = datetime.datetime.now()
-    updated_at = datetime.datetime.now()
+    def __init__(self, id=None, created_at=None, updated_at=None):
+        self.id = str(uuid.uuid4())
+        self.created_at = datetime.datetime.now()
+        self.updated_at = datetime.datetime.now()
 
     def __str__(self):
-        """prints [<class name>] (<self.id>) <self.__dict__>"""
-        return f"[{__class__}] ({self.id}) {self.__dict__}"
+        """prints [<class name>] (<self.id>) <self.__dict__>
+        """
+        return (f"[{__class__.__name__}] ({self.id}) {self.__dict__}")
 
     def save(self):
         """updates the public instance attribute updated_at with
@@ -21,8 +23,9 @@ class BaseModel():
 
     def to_dict(self):
         """ returns a dictionary containing all keys/values 
-          of __dict__ of the instance"""
-        self.__dict__.__setattr__(str(__class__), self.__class__.__name__)
+           of __dict__ of the instance
+        """
+        self.__dict__['__class__'] = f"{__class__.__name__}"
         self.created_at = datetime.datetime.now().isoformat()
         self.updated_at = datetime.datetime.now().isoformat()
         return self.__dict__
