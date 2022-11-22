@@ -7,6 +7,7 @@ import datetime
 class BaseModel:
     """This class defines all common attributes used in this project"""
     def __init__(self, id=None, created_at=None, updated_at=None):
+        """ a class constructor"""
         self.id = str(uuid.uuid4())
         self.created_at = datetime.datetime.now()
         self.updated_at = datetime.datetime.now()
@@ -22,9 +23,8 @@ class BaseModel:
         self.updated_at = datetime.datetime.now()
 
     def to_dict(self):
-        """ returns a dictionary containing all keys/values 
-           of __dict__ of the instance
-        """
+        """ returns a dictionary containing all keys/values
+           of __dict__ of the instance"""
         self.__dict__['__class__'] = f"{__class__.__name__}"
         self.created_at = datetime.datetime.now().isoformat()
         self.updated_at = datetime.datetime.now().isoformat()
