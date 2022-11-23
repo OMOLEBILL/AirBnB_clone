@@ -1,31 +1,43 @@
 #!/usr/bin/python3
 import uuid
-import datetime
+from datetime import datetime
 """this module defines all common attributes used in this project"""
 
 
 class BaseModel:
     """This class defines all common attributes used in this project"""
-    def __init__(self, id=None, created_at=None, updated_at=None):
+    def __init__(self, *args, **kwargs):
+        if kwargs != None and kwargs != {}:
+            for key in kwargs.keys():
+                if key == "created_at":
+                    self.__dict__["created_at"] = datetime.strptime(
+                            kwargs["created_at"], "%Y-%m-%dT%H:%M:%S.%f")
+                elif key == "updated_at":
+                    self.__dict__["updated_at"] = datetime.strptime(
+                            kwargs["updated_at"], "%Y-%m-%dT%H:%M:%S.%f")
+                else:
+                    self.__dict__[key] = kwargs[key]
+
         """ a class constructor"""
         self.id = str(uuid.uuid4())
-        self.created_at = datetime.datetime.now()
-        self.updated_at = datetime.datetime.now()
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
 
     def __str__(self):
         """prints [<class name>] (<self.id>) <self.__dict__>
         """
-        return (f"[{__class__.__name__}] ({self.id}) {self.__dict__}")
+        return (f"[{type(self).__name__}] ({self.id}) {self.__dict__}")
 
     def save(self):
         """updates the public instance attribute updated_at with
            the current datetime """
-        self.updated_at = datetime.datetime.now()
+        self.updated_at = datetime.now()
 
     def to_dict(self):
         """ returns a dictionary containing all keys/values
            of __dict__ of the instance"""
-        self.__dict__['__class__'] = f"{__class__.__name__}"
-        self.created_at = datetime.datetime.now().isoformat()
-        self.updated_at = datetime.datetime.now().isoformat()
-        return self.__dict__
+        tempdict = self.__dict__.copy()
+        tempdict["__class__"] = type(self).__name__
+        tempdict["created_at"] = tempdict["created_at"].isoformat()
+        tempdict["updated_at"] = tempdict["updated_at"].isoformat()
+        return tempdict
