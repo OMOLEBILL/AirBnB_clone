@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 import uuid
 from datetime import datetime
-from models import storage
 """this module defines all common attributes used in this project"""
 
 
 class BaseModel:
     """This class defines all common attributes used in this project"""
     def __init__(self, *args, **kwargs):
+        from models import storage
         if kwargs != None and kwargs != {}:
             for key in kwargs.keys():
                 if key == "created_at":
@@ -32,6 +32,7 @@ class BaseModel:
     def save(self):
         """updates the public instance attribute updated_at with
            the current datetime """
+        from models import storage
         self.updated_at = datetime.now()
         storage.save()
 
