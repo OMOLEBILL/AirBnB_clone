@@ -5,13 +5,12 @@ import cmd
 class HBNBCommand(cmd.Cmd):
     """Simple command processor example."""
     prompt = '(hbnb) '
-    print("\n")
 
     def emptyline(self):
         """Method called when an empty line
            is entered in response to the prompt.
         """
-        prompt = '(hbnb) '/n
+        prompt = '(hbnb) '
 
     def do_EOF(self, line):
         """indicates the end of a file"""
