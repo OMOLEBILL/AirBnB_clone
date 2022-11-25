@@ -1,6 +1,7 @@
 import json
 import os
 from models.base_model import BaseModel
+from models.user import User
 """ module to store all class objects
 """
 whole_dict = {"BaseModel": BaseModel}
