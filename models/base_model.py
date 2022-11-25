@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import uuid
 from datetime import datetime
+import models
 """this module defines all common attributes used in this project"""
 
 
@@ -23,6 +24,7 @@ class BaseModel:
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
             storage.new(self)
+        
 
     def __str__(self):
         """prints [<class name>] (<self.id>) <self.__dict__>

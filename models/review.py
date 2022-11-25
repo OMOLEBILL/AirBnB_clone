@@ -4,18 +4,20 @@
 from models.base_model import BaseModel
 
 
-class City(BaseModel):
-    """a class City that inherits from BaseModel
+class Review(BaseModel):
+    """a class Review that inherits from BaseModel
 
-    Attribute:
-        state_id (str): public class attribute for City's id
-        name (str): public class attribute for City's name
+    Attributes:
+        place_id (str): public class attribute for Review's id
+        user_id (str): public class attribute for Review's id
+        text (str): public class attribute for Review's text
     """
     state_id = ''
     name = ''
+    text = ''
 
     def __init__(self, *args, **kwargs):
-        """init method for City class
+        """init method for Review class
 
          Attributes:
         args: list with arguments

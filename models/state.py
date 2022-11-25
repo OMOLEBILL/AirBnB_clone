@@ -13,7 +13,7 @@ class State(BaseModel):
     name = ''
 
     def __init__(self, *args, **kwargs):
-        """init method for Name class
+        """init method for State class
 
          Attributes:
         args: list with arguments
