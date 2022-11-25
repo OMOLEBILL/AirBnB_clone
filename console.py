@@ -2,8 +2,9 @@
 import cmd
 from models.base_model import BaseModel
 from models import storage
+import re
 
-class_dict = {"BaseModel": BaseModel}
+class_dict = {"BaseModel":BaseModel}
 class HBNBCommand(cmd.Cmd):
     """Simple command processor example."""
     prompt = '(hbnb) '
@@ -84,9 +85,45 @@ class HBNBCommand(cmd.Cmd):
             if arg_list[0] not in class_dict.keys():
                 print("** class doesn't exist **")
                 return 
-            l = [str(obj) for key, obj in p.items()
-                if type(obj).__name__ == arg_list[0]]
-            print(l)
+            lists = [str(v) for k, v in p.items()
+                if type(v).__name__ == arg_list[0]]
+            print(lists)
+
+    def do_update(self, arg):
+        """Updates an instance based on the class name 
+        and id by adding or updating attribute """
+        arg_list = arg.split()
+        p = storage.all()
+
+        if len(arg_list) == 0:
+            print("** class name missing **")
+        elif arg_list[0] not in class_dict.keys():
+            print("** class doesn't exist **")
+        elif len(arg_list) == 1:
+            print("** instance id missing **")
+        elif f"{arg_list[0]}.{arg_list[1]}" not in p.keys():
+            print("** no instance found **")
+        elif len(arg_list) == 2:
+            print("** attribute name missing **")
+        elif len(arg_list) == 3:
+            print("** value missing **")
+        else:
+            cast = None
+            if not re.search('^".*"$',arg_list[3]):
+                if '.' in arg_list[3]:
+                    cast = float
+                else:
+                    cast = int
+            else:
+                arg_list[3] = arg_list[3].replace('"', '')
+            if cast:
+                try:
+                    arg_list[3] = cast(arg_list[3])
+                except ValueError:
+                    pass 
+            key = f"{arg_list[0]}.{arg_list[1]}"
+            setattr(p[key], arg_list[2], arg_list[3])
+            storage.all()[key].save()
             
 
             
