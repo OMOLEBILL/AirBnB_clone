@@ -2,9 +2,19 @@
 import cmd
 from models.base_model import BaseModel
 from models import storage
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 import re
 
-class_dict = {"BaseModel":BaseModel}
+class_dict = {"BaseModel": BaseModel, "User": User, "State": State,
+              "City": City, "Amenity": Amenity, "Place": Place, 
+               "Review": Review}
+
+
 class HBNBCommand(cmd.Cmd):
     """Simple command processor example."""
     prompt = '(hbnb) '
@@ -42,7 +52,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_show(self, arg):
-        """Prints the string representation of an 
+        """Prints the string representation of an
         instance based on the class name and id"""
         p = storage.all()
         arg_list = arg.split()
@@ -75,7 +85,7 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
 
     def do_all(self, arg):
-        """Prints all string representation of all 
+        """Prints all string representation of all
         instances based or not on the class name"""
         arg_list = arg.split()
         p = storage.all()
@@ -84,13 +94,13 @@ class HBNBCommand(cmd.Cmd):
         elif len(arg_list) == 1:
             if arg_list[0] not in class_dict.keys():
                 print("** class doesn't exist **")
-                return 
+                return
             lists = [str(v) for k, v in p.items()
-                if type(v).__name__ == arg_list[0]]
+                    if type(v).__name__ == arg_list[0]]
             print(lists)
 
     def do_update(self, arg):
-        """Updates an instance based on the class name 
+        """Updates an instance based on the class name
         and id by adding or updating attribute """
         arg_list = arg.split()
         p = storage.all()
@@ -109,7 +119,7 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")
         else:
             cast = None
-            if not re.search('^".*"$',arg_list[3]):
+            if not re.search('^".*"$', arg_list[3]):
                 if '.' in arg_list[3]:
                     cast = float
                 else:
@@ -120,12 +130,11 @@ class HBNBCommand(cmd.Cmd):
                 try:
                     arg_list[3] = cast(arg_list[3])
                 except ValueError:
-                    pass 
+                    pass
             key = f"{arg_list[0]}.{arg_list[1]}"
             setattr(p[key], arg_list[2], arg_list[3])
             storage.all()[key].save()
-            
 
-            
-if __name__ == '__main__' :
+
+if __name__ == '__main__':
     HBNBCommand().cmdloop()

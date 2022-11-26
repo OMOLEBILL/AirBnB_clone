@@ -9,8 +9,12 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.place import Place
-from models.Review import Review
-whole_dict = {"BaseModel": BaseModel}
+from models.review import Review
+
+
+whole_dict = {"BaseModel": BaseModel, "User": User, "State" : State,
+               "City" : City, "Amenity": Amenity, "Place": Place, 
+               "Review" : Review}
 
 
 class FileStorage():
@@ -27,21 +31,22 @@ class FileStorage():
     def new(self, obj):
         """sets in all objects with key"""
         key = f"{type(obj).__name__}.{obj.id}"
-        FileStorage.__objects[key] = obj
+        self.__objects[key] = obj
 
     def save(self):
         """serializes __objects to the JSON file"""
-        with open(FileStorage.__file_path, "w", encoding="utf-8") as write:
+        with open(self.__file_path, "w", encoding="utf-8") as write:
             data = {key: value.to_dict() for key, value in
-                    FileStorage.__objects.items()}
+                    self.__objects.items()}
             json.dump(data, write)
 
     def reload(self):
         """deserializes the JSON file to __objects"""
-        if not os.path.isfile(FileStorage.__file_path):
+        if not os.path.isfile(self.__file_path):
             return
-        with open(FileStorage.__file_path, "r") as read:
+        with open(self.__file_path, "r") as read:
             load_dict = json.load(read)
             obj_dict = {k: whole_dict[v["__class__"]](**v)
                         for k, v in load_dict.items()}
-            FileStorage.__objects = obj_dict
+            self.__objects = obj_dict
+

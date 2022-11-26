@@ -9,7 +9,7 @@ class BaseModel:
     """This class defines all common attributes used in this project"""
     def __init__(self, *args, **kwargs):
         from models import storage
-        if kwargs != None and kwargs != {}:
+        if kwargs is not None and kwargs != {}:
             for key in kwargs.keys():
                 if key == "created_at":
                     self.__dict__["created_at"] = datetime.strptime(
@@ -24,7 +24,6 @@ class BaseModel:
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
             storage.new(self)
-        
 
     def __str__(self):
         """prints [<class name>] (<self.id>) <self.__dict__>
