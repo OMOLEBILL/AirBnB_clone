@@ -13,7 +13,7 @@ class Review(BaseModel):
         text (str): public class attribute for Review's text
     """
     state_id = ''
-    name = ''
+    user_id = ''
     text = ''
 
     def __init__(self, *args, **kwargs):
