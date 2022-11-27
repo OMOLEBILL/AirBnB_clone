@@ -42,7 +42,7 @@ Our command interpreter looks like a mini shell and allow us manage the objects 
 * Models Folder: Classes of the project. BaseModel is the parent Class. The other classes (amenity, city, place, review, state, user) inherit from BaseModel and specify others attributes for itselfs.
 * Tests Folder : Unittests for the project
 * AUTHORS: Information about the authors
-* console.py: Eceutable file for the console
+* console.py: Executable file for the console
 * file.json: JSON file with all information of instances
 
 ---
