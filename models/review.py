@@ -12,7 +12,7 @@ class Review(BaseModel):
         user_id (str): public class attribute for Review's id
         text (str): public class attribute for Review's text
     """
-    state_id = ''
+    place_id = ''
     user_id = ''
     text = ''
 
