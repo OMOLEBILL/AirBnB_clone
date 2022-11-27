@@ -12,9 +12,9 @@ from models.place import Place
 from models.review import Review
 
 
-whole_dict = {"BaseModel": BaseModel, "User": User, "State" : State,
-               "City" : City, "Amenity": Amenity, "Place": Place, 
-               "Review" : Review}
+whole_dict = {"BaseModel": BaseModel, "User": User, "State": State,
+              "City": City, "Amenity": Amenity, "Place": Place,
+              "Review": Review}
 
 
 class FileStorage():
@@ -49,4 +49,3 @@ class FileStorage():
             obj_dict = {k: whole_dict[v["__class__"]](**v)
                         for k, v in load_dict.items()}
             self.__objects = obj_dict
-

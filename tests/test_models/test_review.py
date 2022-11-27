@@ -5,47 +5,47 @@
 import unittest
 import inspect
 import pycodestyle
-from models.base_model import BaseModel
+from models.review import Review
 from models.engine.file_storage import FileStorage
 import os
 
 
-class TestBaseModel(unittest.TestCase):
-    """a class for testing methods used in basemodel
+class TestReview(unittest.TestCase):
+    """a class for testing methods used in review
     """
 
     @classmethod
     def setUpClass(cls):
         """ setting up a test environment for the doc tests
         """
-        cls.setup = inspect.getmembers(BaseModel, predicate=inspect.ismethod)
+        cls.setup = inspect.getmembers(Review, predicate=inspect.ismethod)
 
     def test_pep8_base(self):
-        """to test if file: base_model.py comform to PEP8
+        """to test if file: review.py comform to PEP8
         """
         pep8style = pycodestyle.StyleGuide(quiet=True)
-        result = pep8style.check_files(['models/base_model.py'])
+        result = pep8style.check_files(['models/review.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_pep8_test_base(self):
-        """ to test if file: test_base_model.py comform to PEP8
+        """ to test if file: test_review.py comform to PEP8
         """
         pep8style = pycodestyle.StyleGuide(quiet=True)
         result = pep8style.check_files(['tests/test_models'
-                                        '/test_base_model.py'])
+                                        '/test_review.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_module_docstring(self):
         """to test if documentation for module is present
         """
-        self.assertTrue(len(BaseModel.__doc__) >= 1)
+        self.assertTrue(len(Review.__doc__) >= 1)
 
     def test_class_docstring(self):
         """to test if documentation for class is present
         """
-        self.assertTrue(len(BaseModel.__doc__) >= 1)
+        self.assertTrue(len(Review.__doc__) >= 1)
 
     def test_func_docstring(self):
         """to test if documentation for function is present
@@ -61,19 +61,19 @@ class TestBaseModel(unittest.TestCase):
 
     def test_instance(self):
         """test the instance of a class"""
-        b = BaseModel()
-        self.assertIsInstance(b, BaseModel)
-        self.assertTrue(issubclass(type(b), BaseModel))
+        b = Review()
+        self.assertIsInstance(b, Review)
+        self.assertTrue(issubclass(type(b), Review))
 
     def test_args(self):
         """test the number of arguments passed in"""
         self.clear()
         arg = [i for i in range(20)]
-        T = BaseModel(*arg)
+        T = Review(*arg)
 
     def test_to_dict(self):
         """test the keys in the dictionary"""
-        b = BaseModel()
+        b = Review()
         b.name = "bill"
         b.my_number = 788
         z = b.to_dict()
@@ -86,42 +86,34 @@ class TestBaseModel(unittest.TestCase):
 
     def test_dict(self):
         """test the whole dict"""
-        b = BaseModel()
+        b = Review()
         b.name = "bill"
         b.my_number = 788
         z = b.to_dict()
-        x = BaseModel(**z).to_dict()
+        x = Review(**z).to_dict()
         self.assertDictEqual(z, x)
 
     def test_no_args(self):
         """test basemodel with no args"""
         self.clear()
         with self.assertRaises(TypeError) as error:
-            BaseModel.__init__()
+            Review.__init__()
         err = "__init__() missing 1 required positional argument: 'self'"
         self.assertEqual(str(error.exception), err)
 
     def test_save(self):
         """test wether the json file is created"""
         self.clear()
-        my_model = BaseModel()
+        my_model = Review()
         my_model.name = "My_First_Model"
         my_model.my_number = 89
         my_model.save()
         self.assertTrue(os.path.isfile(FileStorage._FileStorage__file_path))
 
-    def test_save_no_args(self):
-        """ tests methos save with no args"""
-        self.clear()
-        with self.assertRaises(TypeError) as error:
-            BaseModel.save()
-        err = "save() missing 1 required positional argument: 'self'"
-        self.assertEqual(str(error.exception), err)
-
     def test_save_more_args(self):
         """ tests method save with more than one arg"""
         self.clear()
         with self.assertRaises(TypeError) as error:
-            BaseModel.save(self, 777)
+            Review.save(self, 777)
         err = "save() takes 1 positional argument but 2 were given"
         self.assertEqual(str(error.exception), err)

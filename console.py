@@ -11,8 +11,8 @@ from models.review import Review
 import re
 
 class_dict = {"BaseModel": BaseModel, "User": User, "State": State,
-              "City": City, "Amenity": Amenity, "Place": Place, 
-               "Review": Review}
+              "City": City, "Amenity": Amenity, "Place": Place,
+              "Review": Review}
 
 
 class HBNBCommand(cmd.Cmd):
@@ -96,7 +96,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
                 return
             lists = [str(v) for k, v in p.items()
-                    if type(v).__name__ == arg_list[0]]
+                     if type(v).__name__ == arg_list[0]]
             print(lists)
 
     def do_update(self, arg):
