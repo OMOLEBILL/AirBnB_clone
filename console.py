@@ -25,11 +25,12 @@ class HBNBCommand(cmd.Cmd):
         """
         pass
 
-    def do_EOF(self, line):
+    def do_EOF(self, arg):
         """indicates the end of a file"""
+        print()
         return True
 
-    def do_quit(self, line):
+    def do_quit(self, arg):
         """this method exits the program"""
         return True
 
