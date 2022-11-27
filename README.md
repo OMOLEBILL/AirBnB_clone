@@ -50,7 +50,6 @@ Our command interpreter looks like a mini shell and allow us manage the objects 
 ## Table of Contents
 
 - [Examples and Usage](#ExamplesandUsage)
-- [Installation](#installation)
 - [Documentation](#documentation)
 - [Contributing](#contributing)
 - [Team](#team)
