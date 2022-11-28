@@ -139,6 +139,36 @@ class HBNBCommand(cmd.Cmd):
             setattr(p[key], arg_list[2], arg_list[3])
             storage.all()[key].save()
 
+    def default(self, line: str) -> None:
+        """checks for Unknown syntax
+        """
+        delim = ['"', '(', ':', '}', '{', ')', "."]
+        meth_dict = {
+                    "all": self.do_all,
+                    "count": self.do_count,
+                    "show": self.do_show,
+                    "destroy": self.do_destroy,
+                    "update": self.do_update,
+                    "create": self.do_create
+        }
+        for x in line:
+            if x in delim:
+                line = line.replace(x, " ")
+        arglist = line.split()
+        classname = arglist[0]
+        method = arglist[1]
+        if method in meth_dict.keys():
+            if len(arglist) == 2:
+                meth_dict[method](classname)
+
+    def do_count(self, arg):
+        """Print the number of class instances"""
+        arg_list = arg.split()
+        p = storage.all()
+        lists = [str(v) for k, v in p.items()
+                 if type(v).__name__ == arg_list[0]]
+        print(len(lists))
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
