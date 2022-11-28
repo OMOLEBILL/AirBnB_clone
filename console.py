@@ -160,6 +160,9 @@ class HBNBCommand(cmd.Cmd):
         if method in meth_dict.keys():
             if len(arglist) == 2:
                 meth_dict[method](classname)
+            if len(arglist) == 3:
+                arg = f"{arglist[0]} {arglist[2]}"
+                meth_dict[method](arg)
 
     def do_count(self, arg):
         """Print the number of class instances"""
