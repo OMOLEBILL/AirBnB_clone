@@ -142,7 +142,7 @@ class HBNBCommand(cmd.Cmd):
     def default(self, line: str) -> None:
         """checks for Unknown syntax
         """
-        delim = ['"', '(', ':', '}', '{', ')', "."]
+        delim = ['"', '(', ':', '}', '{', ')', ".", ","]
         meth_dict = {
                     "all": self.do_all,
                     "count": self.do_count,
@@ -162,6 +162,9 @@ class HBNBCommand(cmd.Cmd):
                 meth_dict[method](classname)
             if len(arglist) == 3:
                 arg = f"{arglist[0]} {arglist[2]}"
+                meth_dict[method](arg)
+            if len(arglist) == 5:
+                arg = f"{arglist[0]} {arglist[2]} {arglist[3]} {arglist[4]}"
                 meth_dict[method](arg)
 
     def do_count(self, arg):
